@@ -11,7 +11,7 @@ app.use(cors({
   methods: ["GET", "POST", "DELETE", "PUT", "PATCH"],
 }));
 
-const mongoURI = "mongodb+srv://uknownwarrior04:DrMXfg7dsC7al4Hl@cyber.89hsngn.mongodb.net/?retryWrites=true&w=majority&appName=cyber";
+const mongoURI = "mongodb+srv://rahulkush5225:Rahul52us@cluster0.uku04rj.mongodb.net/cyber";
 
 // Connect to MongoDB
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
