@@ -57,10 +57,9 @@ const loginSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
+
 const IpAddress = mongoose.model("IpAddress", ipSchema);
 const LoginCount = mongoose.model("LoginCount", loginSchema);
-
-
 
 // GET endpoint to fetch IP address
 app.get("/", async (req, res) => {
@@ -110,12 +109,6 @@ app.use('/',(req, res) => {
 app.use('/rahul',(req, res) => {
   res.status(200).send("This is app page1 010")
 })
-
-
-// Start HTTP server
-server.listen(port, () => {
-  console.log(`Server listening on http://localhost:${port}`);
-});
 
 
 server.listen(5000, () => {
