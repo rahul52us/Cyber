@@ -28,89 +28,88 @@ app.use('/age',(req , res) => {
 })
 
 
-// Define MongoDB connection string
-// const mongoURI =
-//   "mongodb+srv://uknownwarrior04:DrMXfg7dsC7al4Hl@cyber.89hsngn.mongodb.net/?retryWrites=true&w=majority&appName=cyber";
+const mongoURI =
+  "mongodb+srv://uknownwarrior04:DrMXfg7dsC7al4Hl@cyber.89hsngn.mongodb.net/?retryWrites=true&w=majority&appName=cyber";
 
-// // Connect to MongoDB
-// mongoose
-//   .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
-//   .then(() => console.log("Connected to MongoDB"))
-//   .catch((err) => console.error("Failed to connect to MongoDB", err));
+// Connect to MongoDB
+mongoose
+  .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => console.error("Failed to connect to MongoDB", err));
 
-// // Define MongoDB schema
-// const ipSchema = new mongoose.Schema({
-//   ipAddress: {
-//     type: String,
-//   },
-//   createdAt: {
-//     type: Date,
-//     default: Date.now,
-//   },
-// });
+// Define MongoDB schema
+const ipSchema = new mongoose.Schema({
+  ipAddress: {
+    type: String,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
 
-// const loginSchema = new mongoose.Schema({
-//   ipAddress: {
-//     type: String,
-//   },
-//   createdAt: {
-//     type: Date,
-//     default: Date.now,
-//   },
-// });
-// const IpAddress = mongoose.model("IpAddress", ipSchema);
-// const LoginCount = mongoose.model("LoginCount", loginSchema);
-
+const loginSchema = new mongoose.Schema({
+  ipAddress: {
+    type: String,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+const IpAddress = mongoose.model("IpAddress", ipSchema);
+const LoginCount = mongoose.model("LoginCount", loginSchema);
 
 
-// // GET endpoint to fetch IP address
-// app.get("/", async (req, res) => {
-//   try {
-//     const { data } = await axios.get("https://api.ipify.org?format=json");
-//     const ipAddress = data.ip;
 
-//     // Check if IP address already exists in MongoDB
-//     const existingIp = await IpAddress.findOne({ ipAddress });
+// GET endpoint to fetch IP address
+app.get("/", async (req, res) => {
+  try {
+    const { data } = await axios.get("https://api.ipify.org?format=json");
+    const ipAddress = data.ip;
 
-//     if (!existingIp) {
-//       // Save IP address to MongoDB
-//       await IpAddress.create({ ipAddress });
-//     }
+    // Check if IP address already exists in MongoDB
+    const existingIp = await IpAddress.findOne({ ipAddress });
 
-//     // Retrieve visit count from MongoDB
-//     const visitCount = await IpAddress.countDocuments();
+    if (!existingIp) {
+      // Save IP address to MongoDB
+      await IpAddress.create({ ipAddress });
+    }
 
-//     res.json({ ipAddress, visitCount });
-//   } catch (error) {
-//     console.error("Error fetching IP address:", error);
-//     res.status(500).json({ error: "Internal server error" });
-//   }
-// });
+    // Retrieve visit count from MongoDB
+    const visitCount = await IpAddress.countDocuments();
 
-// app.get("/login", async (req, res) => {
-//   try {
-//     const { data } = await axios.get("https://api.ipify.org?format=json");
-//     const ipAddress = data.ip;
-//     const existingIp = await LoginCount.findOne({ ipAddress });
-//     if (!existingIp) {
-//       // Save IP address to MongoDB
-//       await LoginCount.create({ ipAddress });
-//     }
-//     const loginCount = await LoginCount.countDocuments();
-//     res.json({ loginCount });
-//   } catch (error) {
-//     console.error("Error fetching IP address:", error);
-//     res.status(500).json({ error: "Internal server error" });
-//   }
-// });
+    res.json({ ipAddress, visitCount });
+  } catch (error) {
+    console.error("Error fetching IP address:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
-// app.use('/',(req, res) => {
-//   res.status(200).send("This is app page")
-// })
+app.get("/login", async (req, res) => {
+  try {
+    const { data } = await axios.get("https://api.ipify.org?format=json");
+    const ipAddress = data.ip;
+    const existingIp = await LoginCount.findOne({ ipAddress });
+    if (!existingIp) {
+      // Save IP address to MongoDB
+      await LoginCount.create({ ipAddress });
+    }
+    const loginCount = await LoginCount.countDocuments();
+    res.json({ loginCount });
+  } catch (error) {
+    console.error("Error fetching IP address:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
-// app.use('/rahul',(req, res) => {
-//   res.status(200).send("This is app page1 010")
-// })
+app.use('/',(req, res) => {
+  res.status(200).send("This is app page")
+})
+
+app.use('/rahul',(req, res) => {
+  res.status(200).send("This is app page1 010")
+})
 
 
 // Start HTTP server
