@@ -14,18 +14,6 @@ app.use(cors({
   methods: ["GET", "POST", "DELETE", "PUT", "PATCH"],
 }));
 
-app.use('/',(req , res) => {
-  res.status(200).send("this is gamer")
-  })
-
-
-app.use('/name',(req , res) => {
-res.status(200).send("this is name")
-})
-
-app.use('/age',(req , res) => {
-  res.status(200).send("this is age")
-})
 
 
 const mongoURI =
@@ -101,14 +89,6 @@ app.get("/login", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
-app.use('/',(req, res) => {
-  res.status(200).send("This is app page")
-})
-
-app.use('/rahul',(req, res) => {
-  res.status(200).send("This is app page1 010")
-})
 
 
 server.listen(5000, () => {
