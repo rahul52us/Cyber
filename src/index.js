@@ -65,8 +65,7 @@ app.get("/", async (req, res) => {
 
     // Retrieve visit count from MongoDB
     const visitCount = await IpAddress.countDocuments();
-
-    res.json({ ipAddress, visitCount });
+    res.status(200).send({ ipAddress, visitCount })
   } catch (error) {
     console.error("Error fetching IP address:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -83,10 +82,10 @@ app.get("/login", async (req, res) => {
       await LoginCount.create({ ipAddress });
     }
     const loginCount = await LoginCount.countDocuments();
-    res.json({ loginCount });
+    res.status(200).send({ loginCount });
   } catch (error) {
     console.error("Error fetching IP address:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).send({ error: "Internal server error" });
   }
 });
 
