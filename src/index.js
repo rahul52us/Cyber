@@ -2,48 +2,31 @@ const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
 const mongoose = require("mongoose");
-const http = require("http");
 
 const app = express();
 const port = 5000;
-
-const server = http.createServer(app);
 
 app.use(cors({
   origin: "*",
   methods: ["GET", "POST", "DELETE", "PUT", "PATCH"],
 }));
 
-
-
-const mongoURI =
-  "mongodb+srv://uknownwarrior04:DrMXfg7dsC7al4Hl@cyber.89hsngn.mongodb.net/?retryWrites=true&w=majority&appName=cyber";
+const mongoURI = "mongodb+srv://uknownwarrior04:DrMXfg7dsC7al4Hl@cyber.89hsngn.mongodb.net/?retryWrites=true&w=majority&appName=cyber";
 
 // Connect to MongoDB
-mongoose
-  .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Failed to connect to MongoDB", err));
 
 // Define MongoDB schema
 const ipSchema = new mongoose.Schema({
-  ipAddress: {
-    type: String,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
+  ipAddress: String,
+  createdAt: { type: Date, default: Date.now }
 });
 
 const loginSchema = new mongoose.Schema({
-  ipAddress: {
-    type: String,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
+  ipAddress: String,
+  createdAt: { type: Date, default: Date.now }
 });
 
 const IpAddress = mongoose.model("IpAddress", ipSchema);
@@ -65,7 +48,7 @@ app.get("/", async (req, res) => {
 
     // Retrieve visit count from MongoDB
     const visitCount = await IpAddress.countDocuments();
-    res.status(200).send({ ipAddress, visitCount })
+    res.status(200).send({ ipAddress, visitCount });
   } catch (error) {
     console.error("Error fetching IP address:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -89,7 +72,6 @@ app.get("/login", async (req, res) => {
   }
 });
 
-
-server.listen(5000, () => {
-  console.log(`The server is running on port 500`)
+app.listen(port, () => {
+  console.log(`The server is running on port ${port}`);
 });
